@@ -1,0 +1,193 @@
+\documentclass{IMW_poster}
+% \documentclass{article}
+
+% General packages
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[linktocpage=true, hidelinks]{hyperref}
+
+% Math and Code Packages
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{csquotes}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{dsfont}
+\usepackage[linesnumbered,ruled,vlined,algosection]{algorithm2e}
+
+% Citation Packages
+\usepackage[backend=biber,sorting=nty,natbib=true,style=authoryear]{biblatex}
+\addbibresource{IMW_poster_template.bib}
+
+% Definitions of Custom Math Commands
+\DeclareMathOperator{\eps}{\varepsilon}
+\DeclareMathOperator{\R}{\mathbb{R}}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\Prob}{\mathbb{P}}
+
+% Information on the poster
+\title{Example Posters: Working with the IMW Poster Template using the DOT and BiGSEM Logo}
+\author{
+    \textbf{Homo Oeconomicus}, Universität Bielefeld, 
+    \texttt{h.oec@uni-bielefeld.de}\\
+    \textbf{Homo Oeconomicus II}, Universität Bielefeld, 
+    \texttt{h.oec2@uni-bielefeld.de}
+}
+\abstract{%
+    This is the abstract. To place the abstract on the poster, write the 
+    text in the \texttt{\textbackslash abstract} command like in the 
+    accompanying tex-file.\\
+    This is a very, very long paragraph to show that the abstract spans over
+    all columns and does not conform to the separation like the main body of 
+    the poster. In general, the abstract should contain a concise description 
+    and/or summary of the contents of the poster.\\
+    This is a very, very long paragraph to show that the abstract spans over
+    all columns and does not conform to the separation like the main body of 
+    the poster. In general, the abstract should contain a concise description 
+    and/or summary of the contents of the poster. 
+}
+\bottomright{
+    \includegraphics[width=0.05\paperwidth]{example-image-a}
+}
+
+
+\begin{document}
+    
+
+
+\section{Basic Options}
+Options are set in brackets with the \texttt{documentclass} command, like
+\texttt{\textbackslash documentclass[{\normalfont\emph{<options>}}]\{IMW\_poster\}}.
+
+\subsection{Paper Size}
+Available papersizes are \texttt{a0} through \texttt{a4}, where \texttt{a4} is 
+a draft-like option scaling the contents down. The default option is 
+\texttt{a0}.
+
+\subsection{Font Sizes}
+The available font sizes are \texttt{14pt, 17pt, 20pt, 25pt} and 
+\texttt{30pt}. The default option is \texttt{25pt}.
+
+\subsection{Recommended Combinations}
+The recommended combinations of paper size and font size are 
+\texttt{\{a0, 25pt\}, \{a1, 17pt\}, \{a2, 14pt\}, \{a3, 14pt\},
+\{a4, 25pt\}}. A4 papersize should be paired with a large font like
+\texttt{30pt} or \texttt{25pt} since the contents are scaled down.\\
+Note that the recommended combinations do not scale font size and paper size
+perfectly.
+
+\subsection{Logos in the Header}
+The logos in the header of this poster template work similar to the logos in 
+the IMW beamer template.
+Each logo, from left to right \texttt{department}, \texttt{institute} and 
+\texttt{organization}, has a language option. The logos are set-up in such a
+way that the whitespaces are balanced.
+The \texttt{department} option allows for the \texttt{economics, mathematics}
+and \texttt{none} keys. The \texttt{institute} option currently only allows for
+the \texttt{IMW} key. The \texttt{organization} option allows for the 
+\texttt{BiGSEM, CUDE} and \texttt{SFB1283} keys.\\
+The default options are the english economics department logo, the english IMW
+logo and the CUDE logo without any text.\\
+Section \ref{sec:implementation} contains notes on how to additional logos.
+
+\subsection{The \texttt{structurecolor} option}
+The \texttt{structurecolor} option can be called with any named color or color
+mix as the key. It changes the color of structural elements like the section or
+title headers and the line around main body.
+
+\subsection{The \texttt{BiGSEM} and \texttt{CUDE} options}
+The \texttt{BiGSEM} and \texttt{CUDE} options are aggregate options that set
+the appropriate oragnization logos and set the structure color as the primary
+color of the chosen logo.
+
+\subsection{The \texttt{bottomright} option}
+If the \texttt{bottomright} option is called, whatever is given in the 
+\texttt{\textbackslash bottomright} command is placed in a \texttt{TikZ} node
+at the bottom right. This is analogous to how the old poster template lookes.
+
+
+\section{Figures and Tables}
+To place a picture or table on the poster use the \texttt{figure} or 
+\texttt{table} environments, respectively, as shown below. Specifying any 
+placement options, will cause the figure or table to either not appear or 
+display at the end of the document.
+
+Following is an example figure and an example table:
+\begin{figure}
+    \centering
+    \includegraphics[height=0.1\textheight]{example-image-a}
+    \caption{This is an example figure.}
+    \label{fig:example-figure}
+\end{figure}
+
+\setlength{\tabcolsep}{2ex}
+\renewcommand{\arraystretch}{1.25}
+\begin{table}
+    \centering
+    \begin{tabular}{p{0.35\linewidth}|p{0.2\linewidth}p{0.225\linewidth}}
+        Name of Director & Time of Directorate & Num of Nobel Prizes (so
+        far) \\
+        \hline
+        C. C. von Weizsäcker & 1970 - 1973 & 0 \\
+        R. Selten & 1973 - 1984 & 1\\
+        J. Rosenmüller & 1984 - 2002 & 0\\
+        W. Trockel & 2002 - 2009 & 0\\
+        F. Riedel & since 2009 & 0\\
+    \end{tabular}
+    \caption{This is an example table.}
+    \label{tab:example-table}
+\end{table}
+
+
+\section{Math Environments}
+Math environments work like usual:\\
+For all $x \in \R$ and $Y \sim \mathcal{N}(0, 1)$ we have
+\begin{align*}
+    - x^2   &\leq 0 \\
+            &\leq \Prob \left( Y \geq 0 \right) \leq 1.
+\end{align*}
+\begin{equation*}
+    \sum_{i=1}^{\infty} \frac{1}{2^i} = 1
+\end{equation*}
+\begin{equation}\label{eq:example-equation}
+    \exp\left( i \pi \right) + 1 = 0
+\end{equation}
+
+
+\section{References and Citations}
+References work like ususal:\\
+Tables like Table \ref{tab:example-table}, figures like Figures 
+\ref{fig:example-figure} and equations like Equation 
+\eqref{eq:example-equation} can be referenced.\\
+Citations with \texttt{biblatex} can also be implemented: \cite{einstein},
+\cite{dirac}, \cite{knuth-acp}, \cite{knuth-fa}, \cite{knuthwebsite}, 
+\cite{ctan}
+
+
+\section{Notes on Implementation}\label{sec:implementation}
+\textbf{Logos in Header:} Adding additional department, institute or 
+organization logos is simple. The process for adding a new institute is 
+described below but departments or organizations are analogous. (Note that 
+no department language is equivalent having just the base logo and thus the 
+none language variant can be omitted.) Say we want to add the Example 
+Institute and have logos as .png files on hand. In this case, we need to 
+create a new folder named 'example' inside of logos/institutes, in which we 
+put the logos and rename them to \texttt{example\_logo\_\{language\}.png}\\
+For the logo without any text we replace \{language\} with 'none'.
+Now we can simply call the theme with the option \texttt{institute=example}
+and the desired `institutelang' like the pre-configured institutes.
+
+\textbf{Floats:} Since the poster template is realized with a
+\texttt{multicols} environment, floats are not supported in the main body of
+the poster. As a result, specifying any placement options for figures or 
+tables, will cause the figure or table to either not appear or display at the 
+end of the document.
+
+
+\printbibliography
+
+\end{document}
