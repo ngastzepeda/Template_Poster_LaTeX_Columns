@@ -45,6 +45,12 @@
 \newlength\borderlinewidth
 %\setlength\borderlinewidth{4pt}
 
+% Poster Margins — adjust values at lines 213-215
+% (deferred past ProcessOptions so \paperheight reflects the chosen paper size)
+\newlength\postermargin
+\newlength\postertopmargin
+\newlength\posterbottommargin
+
 % Paper Sizes
 \DeclareOption{a0}{\geometry{a0paper}}
 \DeclareOption{a1}{\geometry{a1paper}}
@@ -195,13 +201,18 @@
 
 \ExecuteOptions{a0, 25pt}
 \ExecuteOptionsX{
-    department=economics, departmentlang=english, 
-    institute=DOT, institutelang=english,
-    organization=BiGSEM, organizationlang=none
+    department=univie, departmentlang=german, 
+    institute=none, institutelang=none,
+    organization=none, organizationlang=none
 }
 
 \ProcessOptionsX
 \ProcessOptions\relax
+
+% Poster Margins — edit values here
+\setlength\postermargin{0.05\paperheight}
+\setlength\postertopmargin{1.0\postermargin}
+\setlength\posterbottommargin{0.5\postermargin}
 
 \ifposter@bigsem
     \ExecuteOptionsX{organization=BiGSEM}
@@ -210,54 +221,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%
 %% Color Definitions %%
 %%%%%%%%%%%%%%%%%%%%%%%
-% Define colors
-\definecolor{white}{HTML}{FFFFFF}
-\definecolor{red}{HTML}{E30026}
-\definecolor{blue}{HTML}{0784C8}
-\definecolor{yellow}{HTML}{F8D42A}
-\definecolor{orange}{HTML}{F59A01}
-\definecolor{magenta}{HTML}{CA2D78}
-\definecolor{green}{HTML}{4EAF30}
-\definecolor{violet}{HTML}{BB7BB3}
-\definecolor{pink}{HTML}{CA2D78}
-\definecolor{cyan}{HTML}{22BADE}
+% Uni Wien colours
+\definecolor{uniwienblack}{RGB}{0,0,0}
+\definecolor{uniwienwhite}{RGB}{255,255,255}
+\definecolor{uniwienblue}{RGB}{0,99,166}
+\definecolor{uniwienred}{RGB}{167,28,73}
+\definecolor{uniwienorange}{RGB}{221,72,20}
+\definecolor{uniwienyellow}{RGB}{246,168,0}
+\definecolor{uniwiengreen}{RGB}{148,193,84}
+\definecolor{uniwiencyan}{RGB}{17,137,122}
 
-% Bielefeld Uni/WiWi colors
-\definecolor{universitygreen}{HTML}{008956}
-\definecolor{universitylightgreen}{HTML}{14F5B4}
-\definecolor{posterpurple}{HTML}{73789B}
-\definecolor{econlightblue}{HTML}{50AFEF}
-\definecolor{econverylightblue}{HTML}{79C2E2}
-\definecolor{econveryverylightblue}{HTML}{A4D6F2}
-\definecolor{econalmostwhiteblue}{HTML}{D0EAF9}
-
-% Official Color Definitions
-\definecolor{biologygreen}{HTML}{92B168}
-\definecolor{chemistrypurple}{HTML}{A08CAA}
-\definecolor{educationorange}{HTML}{F08C50}
-\definecolor{historyblue}{HTML}{7DB4BE}
-\definecolor{healthred}{HTML}{DC5A5A}
-\definecolor{literatureblue}{HTML}{8FA3B9}
-\definecolor{mathyellow}{HTML}{DCAA41}
-\definecolor{medicineblue}{HTML}{145F7D}
-\definecolor{physicsgreen}{HTML}{649696}
-\definecolor{psycologyred}{HTML}{8C3250}
-\definecolor{lawgray}{HTML}{8C8C96}
-\definecolor{sociologyyellow}{HTML}{BFD02F}
-\definecolor{techblue}{HTML}{558CA0}
-\definecolor{econblue}{HTML}{74799B}
-
-
-% IMW color and related colors
-\definecolor{imwblue}{HTML}{3c3c5a}
-\definecolor{imwlightblue}{HTML}{385DC9}
-\definecolor{imwyellow}{HTML}{C9BD24}
-\colorlet{cudecolor}{econblue}
-\definecolor{bigsemblue}{HTML}{3AA7DF}
-
-\colorlet{structurecolor}{econblue}
+\colorlet{structurecolor}{uniwienblue}
 \ifposter@bigsem
-    \colorlet{structurecolor}{bigsemblue}
+    \colorlet{structurecolor}{uniwienblue}
 \fi
 
 \ifdef{\poster@structurecolor}{
@@ -304,10 +280,12 @@
 }{}%
 
 \newcommand{\departmentlogo}{%
-    \raisebox{\dimexpr0.5\logoheight-0.5\departmentlogoheight}{%
-    \includegraphics[height=\departmentlogoheight]{%
-        logos/departments/\poster@department/\poster@department_logo_\poster@departmentlang%
-    }}%
+    \ifdefstring{\poster@department}{none}{}{%
+        \raisebox{\dimexpr0.5\logoheight-0.5\departmentlogoheight}{%
+        \includegraphics[height=\departmentlogoheight]{%
+            logos/departments/\poster@department/\poster@department_logo_\poster@departmentlang%
+        }}%
+    }%
 }%
 
 
@@ -316,10 +294,12 @@
 }{}%
 
 \newcommand{\institutelogo}{%
-    \raisebox{\dimexpr0.5\logoheight-0.5\institutelogoheight}{%
-    \includegraphics[height=\institutelogoheight]{%
-        logos/institutes/\poster@institute/\poster@institute_logo_\poster@institutelang%
-    }}%
+    \ifdefstring{\poster@institute}{none}{}{%
+        \raisebox{\dimexpr0.5\logoheight-0.5\institutelogoheight}{%
+        \includegraphics[height=\institutelogoheight]{%
+            logos/institutes/\poster@institute/\poster@institute_logo_\poster@institutelang%
+        }}%
+    }%
 }%
 
 
@@ -328,10 +308,12 @@
 }{}%
 
 \newcommand{\organizationlogo}{%
-    \raisebox{\dimexpr0.5\logoheight-0.5\organizationlogoheight}{%
-    \includegraphics[height=\organizationlogoheight]{%
-        logos/organizations/\poster@organization/\poster@organization_logo_\poster@organizationlang%
-    }}%
+    \ifdefstring{\poster@organization}{none}{}{%
+        \raisebox{\dimexpr0.5\logoheight-0.5\organizationlogoheight}{%
+        \includegraphics[height=\organizationlogoheight]{%
+            logos/organizations/\poster@organization/\poster@organization_logo_\poster@organizationlang%
+        }}%
+    }%
 }%
 
 % Define new page style to put logos in header
@@ -372,12 +354,9 @@
 \renewcommand{\@seccntformat}[1]{\csname the#1\endcsname\hskip0.5em}%
 
 % No indent, set margins and change default font to sans serif
-\newlength\postermargin
-\setlength\postermargin{0.05\paperheight}
-
 \setlength\parindent{0pt}
 \geometry{hmargin=\postermargin,
-          vmargin={\postermargin, 0.5\postermargin},
+          vmargin={\postertopmargin, \posterbottommargin},
           headsep=0.02\paperheight}
 \renewcommand{\familydefault}{lelo}
 
